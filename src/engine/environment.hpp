@@ -4,11 +4,19 @@
 namespace engine {
 namespace environment {
 
-// Initialize environment. Returns true on success.
+/**
+ * Initializes GLFW and sets window hints.
+ */
 bool initialize();
+
 bool isInitialized();
+
+/**
+ * Cleans up GLFW environment, closing any remaining windows.
+ */
 void terminate();
 
 }  // namespace environment
 }  // namespace engine
+
 #endif
