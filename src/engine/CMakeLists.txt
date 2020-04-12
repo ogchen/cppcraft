@@ -3,16 +3,24 @@ set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 
 set(ENGINE_SOURCE_FILES
-    environment.cpp
     window.cpp
     window.hpp
     shader.cpp
     shader.hpp
     shaderprogram.cpp
     shaderprogram.hpp
+    texturearray.cpp
+    texturearray.hpp
 )
 add_library(engine ${ENGINE_SOURCE_FILES})
-target_link_libraries(engine PRIVATE glfw OpenGL::GL glad)
+
+set(ENGINE_DEPENDENCIES
+    glfw
+    OpenGL::GL
+    glad
+    stb_image
+)
+target_link_libraries(engine PRIVATE ${ENGINE_DEPENDENCIES})
 
 if(BUILD_TESTING)
     add_subdirectory(unittest)
