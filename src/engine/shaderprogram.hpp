@@ -23,7 +23,7 @@ class ShaderProgram {
     ShaderProgram(const std::string& vertFilePath,
                   const std::string& fragFilePath);
 
-    void use() const;
+    void bind() const;
 
    private:
     GLuint d_programId;

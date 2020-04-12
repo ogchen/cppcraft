@@ -1,7 +1,8 @@
 #ifndef ENGINE_WINDOW_HPP
 #define ENGINE_WINDOW_HPP
 
-#include <cstdint>
+#include <atomic>
+#include <optional>
 #include <string>
 
 class GLFWwindow;
@@ -11,31 +12,51 @@ namespace engine {
 class Window {
    public:
     /**
-     * Creates a window, making the window context current.
+     * Attempt to create a Window object. Returns a falsey optional if an active
+     * Window instance exists, i.e. if s_activeInstance is true.
      *
      * @param width Width of window in pixels
      * @param height Height of window in pixels
      * @param title Title of window
+     * @param hideWindow Window is hidden on creation
+     * @return An optional depending whether a window was created or not.
      */
-    Window(uint32_t width, uint32_t height, const std::string& title);
+    static std::optional<Window> createWindow(size_t width, size_t height,
+                                              const std::string& title,
+                                              bool hideWindow = false);
     ~Window();
-    Window(const Window&) = delete;
-    Window& operator=(const Window&) = delete;
     Window(Window&& window);
     Window& operator=(Window&& window);
+    Window(const Window&) = delete;
+    Window& operator=(const Window&) = delete;
 
-    /**
-     * Determine if the window should close.
-     */
     bool shouldClose();
+    void setShouldClose(bool shouldClose);
 
-    /**
-     *
-     */
+    // This should be somewhere else
     void renderLoop();
 
    private:
+    /**
+     * Creates a window. Initializes GLFW and GLAD and makes the window the
+     * current context.
+     *
+     * @param width Width of window in pixels
+     * @param height Height of window in pixels
+     * @param title Title of window
+     * @param hideWindow Window is hidden on creation
+     */
+    Window(size_t width, size_t height, const std::string& title,
+           bool hideWindow);
+
+   private:
     GLFWwindow* d_window;
+
+    /**
+     * Static atomic boolean that indicates if a Window instance currently
+     * exists.
+     */
+    static std::atomic<bool> s_activeInstance;
 };
 
 }  // namespace engine

@@ -1,4 +1,5 @@
 set(ENGINE_TEST_FILES
+    window.t.cpp
     shader.t.cpp
 )
 add_executable(engine_test ${ENGINE_TEST_FILES})

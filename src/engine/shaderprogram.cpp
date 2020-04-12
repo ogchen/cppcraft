@@ -44,6 +44,6 @@ ShaderProgram::ShaderProgram(const std::string& vertFilePath,
           Shader::createShaderFromFile(vertFilePath, GL_VERTEX_SHADER),
           Shader::createShaderFromFile(fragFilePath, GL_FRAGMENT_SHADER)) {}
 
-void ShaderProgram::use() const { glUseProgram(d_programId); }
+void ShaderProgram::bind() const { glUseProgram(d_programId); }
 
 }  // namespace engine
