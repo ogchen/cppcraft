@@ -67,35 +67,24 @@ std::vector<ImageData> generateImageDataVec(
     return imageDataVec;
 }
 
-std::vector<unsigned char> generateTextureArrayBuffer(
-    const std::vector<ImageData>& imageDataVec, size_t layerSize) {
-    const size_t layerCount = imageDataVec.size();
-    std::vector<unsigned char> textureArrayBuffer;
-    textureArrayBuffer.reserve(layerCount * layerSize);
-
-    for (const ImageData& imageData : imageDataVec) {
-        textureArrayBuffer.insert(textureArrayBuffer.end(), imageData.rawData,
-                                  imageData.rawData + layerSize);
-    }
-
-    return textureArrayBuffer;
-}
-
 TextureArray::TextureArray(const std::vector<std::string>& relPaths,
                            size_t width, size_t height) {
     const size_t layerCount = relPaths.size();
     std::vector<ImageData> imageDataVec =
         generateImageDataVec(relPaths, width, height);
 
-    const size_t layerSize = width * height * 4;
-    std::vector<unsigned char> textureArrayBuffer =
-        generateTextureArrayBuffer(imageDataVec, layerSize);
-
     glGenTextures(1, &d_textureArrayObject);
     glBindTexture(GL_TEXTURE_2D_ARRAY, d_textureArrayObject);
 
     glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, width, height, layerCount, 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, textureArrayBuffer.data());
+                 GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+    for (size_t layer = 0; layer != imageDataVec.size(); ++layer)
+    {
+        const ImageData& imageData = imageDataVec[layer];
+        glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0, width, height, layer,
+                        GL_RGBA, GL_UNSIGNED_BYTE, imageData.rawData);
+    }
 
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -58,16 +58,6 @@ class TextureArray {
 std::vector<ImageData> generateImageDataVec(
     const std::vector<std::string>& relPaths, size_t width, size_t height);
 
-/**
- * Transforms the vector of ImageData into a contiguous byte array.
- *
- * @param imageDataVec Vector of image data.
- * @param layerSize Size of each layer, equivalent to width * height.
- * @return Texture byte vector.
- */
-std::vector<unsigned char> generateTextureArrayBuffer(
-    const std::vector<ImageData>& imageDataVec, size_t layerSize);
-
 }  // namespace engine
 
 #endif
