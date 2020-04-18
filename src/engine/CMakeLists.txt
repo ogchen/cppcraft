@@ -11,6 +11,8 @@ set(ENGINE_SOURCE_FILES
     shaderprogram.hpp
     texturearray.cpp
     texturearray.hpp
+    vertexdataview.hpp
+    vertexdataview.cpp
 )
 add_library(engine ${ENGINE_SOURCE_FILES})
 
