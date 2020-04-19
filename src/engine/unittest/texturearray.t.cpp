@@ -22,15 +22,20 @@ class TextureArrayTest : public ::testing::Test {
 };
 
 TEST_F(TextureArrayTest, ErrorOnIncorrectPaths) {
-    std::vector<std::string> relPaths = {"bogus/path", "bogus/path2"};
-    EXPECT_THROW(TextureArray texture(relPaths, 16, 16), std::runtime_error);
+    std::vector<std::string> filePaths = {"bogus/path", "bogus/path2"};
+    EXPECT_THROW(TextureArray texture(filePaths, 16, 16), std::runtime_error);
 }
 
 TEST_F(TextureArrayTest, ErrorOnIncorrectSize) {
-    std::vector<std::string> relPaths = {"block/grass_block_side.png",
-                                         "block/glass.png"};
-    EXPECT_NO_THROW(TextureArray textureA(relPaths, 16, 16));
-    EXPECT_THROW(TextureArray textureB(relPaths, 0, 0), std::runtime_error);
+    unsigned char texture[] = {0, 0, 0, 0};
+    int width = 2;
+    int height = 2;
+
+    std::vector<ImageData> dataVec;
+    dataVec.emplace_back(width, height, 4, texture);
+
+    EXPECT_NO_THROW(TextureArray textureA(dataVec, width, height));
+    EXPECT_THROW(TextureArray textureB(dataVec, 0, 0), std::runtime_error);
 }
 
 }  // namespace

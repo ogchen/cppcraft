@@ -9,6 +9,8 @@ set(ENGINE_SOURCE_FILES
     shader.hpp
     shaderprogram.cpp
     shaderprogram.hpp
+    imagedata.cpp
+    imagedata.hpp
     texturearray.cpp
     texturearray.hpp
     vertexdataview.cpp
@@ -18,13 +20,20 @@ set(ENGINE_SOURCE_FILES
 )
 add_library(engine ${ENGINE_SOURCE_FILES})
 
-set(ENGINE_DEPENDENCIES
+set(PRIVATE_ENGINE_DEPENDENCIES
     glfw
     OpenGL::GL
-    glad
     stb_image
 )
-target_link_libraries(engine PRIVATE ${ENGINE_DEPENDENCIES})
+
+set(PUBLIC_ENGINE_DEPENDENCIES
+    glad
+)
+
+target_link_libraries(engine
+    PRIVATE ${PRIVATE_ENGINE_DEPENDENCIES}
+    PUBLIC ${PUBLIC_ENGINE_DEPENDENCIES}
+)
 
 if(BUILD_TESTING)
     add_subdirectory(unittest)

@@ -1,6 +1,7 @@
 set(ENGINE_TEST_FILES
     window.t.cpp
     shader.t.cpp
+    imagedata.t.cpp
     texturearray.t.cpp
     vertexdataview.t.cpp
 )
