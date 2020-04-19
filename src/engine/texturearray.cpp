@@ -19,14 +19,14 @@ TextureArray::TextureArray(const std::vector<ImageData>& imageDataVec,
     const size_t layerCount = imageDataVec.size();
 
     glGenTextures(1, &d_textureArrayObject);
-    glBindTexture(GL_TEXTURE_2D_ARRAY, d_textureArrayObject);
+    bind();
 
     glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, width, height, layerCount, 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
     for (size_t layer = 0; layer != imageDataVec.size(); ++layer) {
         const ImageData& imageData = imageDataVec[layer];
-        glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0, width, height, layer,
+        glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, layer, width, height, 1,
                         GL_RGBA, GL_UNSIGNED_BYTE, imageData.rawData);
     }
 
@@ -35,7 +35,11 @@ TextureArray::TextureArray(const std::vector<ImageData>& imageDataVec,
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER,
                     GL_NEAREST_MIPMAP_NEAREST);
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
+}
+
+void TextureArray::bind() {
+    glBindTexture(GL_TEXTURE_2D_ARRAY, d_textureArrayObject);
 }
 
 }  // namespace engine

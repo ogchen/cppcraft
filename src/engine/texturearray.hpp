@@ -36,6 +36,8 @@ class TextureArray {
     TextureArray(const std::vector<ImageData>& imageDataVec, size_t width,
                  size_t height);
 
+    void bind();
+
    private:
     GLuint d_textureArrayObject;
 };
