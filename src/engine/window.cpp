@@ -1,5 +1,7 @@
 #include "window.hpp"
 
+#include "renderer.hpp"
+
 // clang-format off
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -71,11 +73,12 @@ void Window::setShouldClose(bool shouldClose) {
     glfwSetWindowShouldClose(d_window, shouldClose);
 }
 
-void Window::renderLoop() {
+void Window::renderLoop(Renderer& renderer) {
     if (glfwGetKey(d_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         setShouldClose(true);
     }
-    glClear(GL_COLOR_BUFFER_BIT);
+
+    renderer.renderFrame();
 
     glfwSwapBuffers(d_window);
     glfwPollEvents();

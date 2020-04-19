@@ -28,6 +28,11 @@ class VertexBuffer {
      */
     void loadData(const VertexDataView& vertexData);
 
+    /**
+     * Number of vertices in index buffer
+     */
+    size_t numVertices();
+
    private:
     /**
      * Buffers the data into the corresponding buffer object. The GL buffer is
@@ -53,6 +58,7 @@ class VertexBuffer {
 
     size_t d_vBufCapacity;
     size_t d_eBufCapacity;
+    size_t d_numVertices;
     static constexpr size_t s_shrinkFactor = 5;
 };
 

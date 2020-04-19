@@ -8,6 +8,7 @@
 class GLFWwindow;
 
 namespace engine {
+class Renderer;
 
 class Window {
    public:
@@ -32,9 +33,7 @@ class Window {
 
     bool shouldClose();
     void setShouldClose(bool shouldClose);
-
-    // This should be somewhere else
-    void renderLoop();
+    void renderLoop(Renderer& renderer);
 
    private:
     /**

@@ -17,6 +17,8 @@ set(ENGINE_SOURCE_FILES
     vertexdataview.hpp
     vertexbuffer.cpp
     vertexbuffer.hpp
+    renderer.cpp
+    renderer.hpp
 )
 add_library(engine ${ENGINE_SOURCE_FILES})
 
